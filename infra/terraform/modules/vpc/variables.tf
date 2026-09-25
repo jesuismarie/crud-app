@@ -30,6 +30,18 @@ variable "private_subnet_cidrs" {
   type        = list(string)
 }
 
+variable "enable_nat_gateway" {
+  description = "Whether to create NAT Gateway(s)"
+  type        = bool
+  default     = true
+}
+
+variable "single_nat_gateway" {
+  description = "Use a single shared NAT Gateway instead of one per AZ (cheaper for non-prod)"
+  type        = bool
+  default     = true
+}
+
 variable "tags" {
   description = "Additional tags to apply to all resources"
   type        = map(string)
