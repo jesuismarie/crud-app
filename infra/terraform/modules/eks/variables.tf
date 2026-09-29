@@ -25,18 +25,8 @@ variable "cluster_version" {
   default     = "1.30"
 
   validation {
-    condition     = can(regex("^1\\.(2[8-9]|3[0-1])$", var.cluster_version))
-    error_message = "cluster_version must be a supported EKS version (e.g. 1.28, 1.29, 1.30, 1.31)."
-  }
-}
-
-variable "vpc_id" {
-  description = "ID of the VPC where the cluster will be created"
-  type        = string
-
-  validation {
-    condition     = can(regex("^vpc-", var.vpc_id))
-    error_message = "vpc_id must be a valid VPC ID starting with 'vpc-'."
+    condition     = can(regex("^1\\.(2[8-9]|3[0-7])$", var.cluster_version))
+    error_message = "cluster_version must be a supported EKS version (e.g. 1.28, 1.29, 1.30, 1.31, 1.32, 1.33, 1.34, 1.35, 1.36, 1.37)."
   }
 }
 
@@ -49,18 +39,6 @@ variable "public_subnet_ids" {
   description = "List of public subnet IDs (used for control plane ENIs when public endpoint is enabled)"
   type        = list(string)
   default     = []
-}
-
-variable "endpoint_public_access" {
-  description = "Whether the Kubernetes API server is publicly accessible"
-  type        = bool
-  default     = true
-}
-
-variable "endpoint_private_access" {
-  description = "Whether the Kubernetes API server is accessible from within the VPC"
-  type        = bool
-  default     = true
 }
 
 variable "public_access_cidrs" {
@@ -77,6 +55,26 @@ variable "node_instance_types" {
   validation {
     condition     = length(var.node_instance_types) >= 1
     error_message = "At least one instance type must be specified."
+  }
+}
+
+variable "node_ami_type" {
+  description = "EKS managed node group AMI type"
+  type        = string
+  default     = "AL2023_x86_64_STANDARD"
+
+  validation {
+    condition = contains([
+      "AL2_x86_64",
+      "AL2_x86_64_GPU",
+      "AL2_ARM_64",
+      "AL2023_x86_64_STANDARD",
+      "AL2023_ARM_64_STANDARD",
+      "AL2023_x86_64_NVIDIA",
+      "BOTTLEROCKET_x86_64",
+      "BOTTLEROCKET_ARM_64",
+    ], var.node_ami_type)
+    error_message = "node_ami_type must be a valid EKS AMI type (e.g. AL2023_x86_64_STANDARD, AL2_x86_64)."
   }
 }
 
@@ -128,4 +126,15 @@ variable "tags" {
   description = "Additional tags to apply to all resources"
   type        = map(string)
   default     = {}
+}
+
+variable "eks_security_group_id" {
+  description = "The ID of the security group to associate with the EKS cluster."
+  type        = string
+  default     = null
+}
+
+variable "eks_nodes_security_group_id" {
+  description = "SG attached to worker nodes via launch template"
+  type        = string
 }
