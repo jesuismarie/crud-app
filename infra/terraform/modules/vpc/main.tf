@@ -59,10 +59,8 @@ resource "aws_subnet" "public" {
   availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = true
 
-  tags = merge(local.common_tags, {
-    Name                                        = "${local.name_prefix}-public-${var.azs[count.index]}"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1"
+  tags = merge(local.common_tags, var.private_subnet_tags, {
+    Name = "${local.name_prefix}-public-${var.azs[count.index]}",
   })
 }
 
@@ -74,10 +72,8 @@ resource "aws_subnet" "private" {
   cidr_block        = var.private_subnet_cidrs[count.index]
   availability_zone = var.azs[count.index]
 
-  tags = merge(local.common_tags, {
-    Name                                        = "${local.name_prefix}-private-${var.azs[count.index]}"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
+  tags = merge(local.common_tags, var.private_subnet_tags, {
+    Name = "${local.name_prefix}-private-${var.azs[count.index]}",
   })
 }
 

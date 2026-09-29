@@ -23,5 +23,7 @@ module "vpc" {
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
   single_nat_gateway   = var.single_nat_gateway
+  public_subnet_tags   = var.public_subnet_tags
+  private_subnet_tags  = var.private_subnet_tags
   cluster_name         = var.cluster_name
 }
