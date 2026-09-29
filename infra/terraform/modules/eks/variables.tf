@@ -50,7 +50,7 @@ variable "public_access_cidrs" {
 variable "node_instance_types" {
   description = "List of instance types for the managed node group"
   type        = list(string)
-  default     = ["t3.small"]
+  default     = ["t3.medium"]
 
   validation {
     condition     = length(var.node_instance_types) >= 1
@@ -81,7 +81,7 @@ variable "node_ami_type" {
 variable "node_desired_size" {
   description = "Desired number of worker nodes"
   type        = number
-  default     = 1
+  default     = 2
 
   validation {
     condition     = var.node_desired_size >= 1 && var.node_desired_size <= 10
@@ -103,7 +103,7 @@ variable "node_min_size" {
 variable "node_max_size" {
   description = "Maximum number of worker nodes"
   type        = number
-  default     = 2
+  default     = 3
 
   validation {
     condition     = var.node_max_size >= 1 && var.node_max_size <= 10
