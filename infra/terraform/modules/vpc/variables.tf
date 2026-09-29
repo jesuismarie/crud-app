@@ -74,19 +74,13 @@ variable "tags" {
 variable "public_subnet_tags" {
   description = "Tags to apply to public subnet"
   type        = map(string)
-  default = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1"
-  }
+  default     = {}
 }
 
 variable "private_subnet_tags" {
   description = "Tags to apply to private subnet"
   type        = map(string)
-  default = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
-  }
+  default     = {}
 }
 
 variable "cluster_name" {

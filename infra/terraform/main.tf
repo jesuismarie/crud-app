@@ -1,3 +1,20 @@
+locals {
+  common_tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                    = "1"
+  }
+  private_subnet_tags = {
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"           = "1"
+  }
+}
+
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -23,7 +40,7 @@ module "vpc" {
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
   single_nat_gateway   = var.single_nat_gateway
-  public_subnet_tags   = var.public_subnet_tags
-  private_subnet_tags  = var.private_subnet_tags
+  public_subnet_tags   = local.public_subnet_tags
+  private_subnet_tags  = local.private_subnet_tags
   cluster_name         = var.cluster_name
 }
