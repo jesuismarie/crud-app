@@ -62,20 +62,51 @@ variable "single_nat_gateway" {
   default     = true
 }
 
-variable "public_subnet_tags" {
-  description = "Tags to apply to public subnet"
-  type        = map(string)
-  default = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1"
-  }
+# EKS
+variable "cluster_name" {
+  description = "Name of the EKS cluster"
+  type        = string
+  default     = "user-crud-eks"
 }
 
-variable "private_subnet_tags" {
-  description = "Tags to apply to private subnet"
-  type        = map(string)
-  default = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
-  }
+variable "cluster_version" {
+  description = "Kubernetes version"
+  type        = string
+  default     = "1.36"
+}
+
+variable "node_instance_types" {
+  description = "EC2 instance types for the node group"
+  type        = list(string)
+  default     = ["t3.small"]
+}
+
+variable "node_ami_type" {
+  description = "EKS managed node group AMI type"
+  type        = string
+  default     = "AL2023_x86_64_STANDARD"
+}
+
+variable "node_desired_size" {
+  description = "Desired number of worker nodes"
+  type        = number
+  default     = 1
+}
+
+variable "node_min_size" {
+  description = "Minimum number of worker nodes"
+  type        = number
+  default     = 1
+}
+
+variable "node_max_size" {
+  description = "Maximum number of worker nodes"
+  type        = number
+  default     = 2
+}
+
+variable "node_disk_size" {
+  description = "Disk size in GiB for worker nodes"
+  type        = number
+  default     = 20
 }
