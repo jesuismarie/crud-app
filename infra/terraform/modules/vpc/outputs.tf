@@ -33,6 +33,11 @@ output "nat_gateway_ids" {
   value       = aws_nat_gateway.ngw[*].id
 }
 
+output "nat_public_ips" {
+  description = "Public IPs of the NAT Gateway(s)"
+  value       = aws_eip.nat[*].public_ip
+}
+
 output "azs" {
   description = "List of availability zones used"
   value       = var.azs
