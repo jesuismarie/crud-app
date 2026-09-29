@@ -132,9 +132,20 @@ resource "aws_launch_template" "nodes" {
     aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
   ]
 
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      volume_size           = var.node_disk_size
+      volume_type           = "gp3"
+      encrypted             = true
+      delete_on_termination = true
+    }
+  }
+
   metadata_options {
     http_endpoint               = "enabled"
-    http_tokens                 = "required" # IMDSv2
+    http_tokens                 = "required"
     http_put_response_hop_limit = 2
   }
 
@@ -158,7 +169,6 @@ resource "aws_eks_node_group" "cluster_node_group" {
 
   instance_types = var.node_instance_types
   ami_type       = var.node_ami_type
-  disk_size      = var.node_disk_size
 
   scaling_config {
     desired_size = var.node_desired_size
