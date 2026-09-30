@@ -122,12 +122,6 @@ variable "node_disk_size" {
   }
 }
 
-variable "tags" {
-  description = "Additional tags to apply to all resources"
-  type        = map(string)
-  default     = {}
-}
-
 variable "eks_security_group_id" {
   description = "The ID of the security group to associate with the EKS cluster."
   type        = string
@@ -137,4 +131,16 @@ variable "eks_security_group_id" {
 variable "eks_nodes_security_group_id" {
   description = "SG attached to worker nodes via launch template"
   type        = string
+}
+
+variable "common_tags" {
+  description = "Common tags to apply to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "tags" {
+  description = "Additional tags to apply to all resources"
+  type        = map(string)
+  default     = {}
 }
