@@ -42,7 +42,6 @@ module "vpc" {
   single_nat_gateway   = var.single_nat_gateway
   public_subnet_tags   = local.public_subnet_tags
   private_subnet_tags  = local.private_subnet_tags
-  cluster_name         = var.cluster_name
 }
 
 module "eks" {
@@ -62,6 +61,7 @@ module "eks" {
   node_disk_size              = var.node_disk_size
   eks_security_group_id       = aws_security_group.eks_cluster_sg.id
   eks_nodes_security_group_id = aws_security_group.eks_nodes_sg.id
+  tags                        = local.common_tags
 
   depends_on = [module.vpc]
 }
