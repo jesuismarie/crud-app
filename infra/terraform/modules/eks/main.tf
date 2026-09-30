@@ -1,21 +1,7 @@
 locals {
   name_prefix = "${var.project_name}-${var.environment}"
 
-  common_tags = merge(
-    var.common_tags,
-    var.tags
-  )
-
   cluster_subnet_ids = concat(var.private_subnet_ids, var.public_subnet_ids)
-}
-
-resource "terraform_data" "validation" {
-  lifecycle {
-    precondition {
-      condition     = var.node_min_size <= var.node_desired_size && var.node_desired_size <= var.node_max_size
-      error_message = "node scaling must satisfy: min_size <= desired_size <= max_size."
-    }
-  }
 }
 
 # EKS Cluster IAM Role
@@ -33,8 +19,8 @@ resource "aws_iam_role" "cluster" {
     }]
   })
 
-  tags = merge(local.common_tags, {
-    Name = var.cluster_name
+  tags = merge(var.tags, {
+    Name = "${var.cluster_name}-eks-cluster-role"
   })
 }
 
@@ -63,7 +49,7 @@ resource "aws_iam_role" "node" {
     }]
   })
 
-  tags = local.common_tags
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "node_AmazonEKSWorkerNodePolicy" {
@@ -100,7 +86,7 @@ resource "aws_eks_cluster" "main" {
     aws_iam_role_policy_attachment.cluster_AmazonEKSVPCResourceController
   ]
 
-  tags = merge(local.common_tags, {
+  tags = merge(var.tags, {
     Name = var.cluster_name
   })
 }
@@ -114,7 +100,7 @@ resource "aws_iam_openid_connect_provider" "oidc" {
   thumbprint_list = [data.tls_certificate.cluster.certificates[0].sha1_fingerprint]
   url             = aws_eks_cluster.main.identity[0].oidc[0].issuer
 
-  tags = merge(local.common_tags, {
+  tags = merge(var.tags, {
     Name = "${local.name_prefix}-eks-oidc"
   })
 }
@@ -147,7 +133,7 @@ resource "aws_launch_template" "nodes" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = merge(local.common_tags, {
+    tags = merge(var.tags, {
       Name = "${local.name_prefix}-node"
     })
   }
@@ -187,7 +173,14 @@ resource "aws_eks_node_group" "cluster_node_group" {
     aws_iam_role_policy_attachment.node_AmazonEC2ContainerRegistryReadOnly,
   ]
 
-  tags = merge(local.common_tags, {
+  lifecycle {
+    precondition {
+      condition     = var.node_min_size <= var.node_desired_size && var.node_desired_size <= var.node_max_size
+      error_message = "Node group sizes must satisfy min <= desired <= max (got min=${var.node_min_size}, desired=${var.node_desired_size}, max=${var.node_max_size})."
+    }
+  }
+
+  tags = merge(var.tags, {
     Name = "${local.name_prefix}-node-group"
   })
 }

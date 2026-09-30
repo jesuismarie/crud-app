@@ -66,30 +66,19 @@ variable "single_nat_gateway" {
 }
 
 variable "public_subnet_tags" {
-  description = "Tags to apply to public subnet"
+  description = "Extra tags applied to all public subnets"
   type        = map(string)
   default     = {}
 }
 
 variable "private_subnet_tags" {
-  description = "Tags to apply to private subnet"
-  type        = map(string)
-  default     = {}
-}
-
-variable "cluster_name" {
-  description = "Name of the EKS cluster"
-  type        = string
-}
-
-variable "common_tags" {
-  description = "Common tags to apply to all resources"
+  description = "Extra tags applied to all private subnets"
   type        = map(string)
   default     = {}
 }
 
 variable "tags" {
-  description = "Additional tags to apply to all resources"
+  description = "Module specific tags to apply to all resources"
   type        = map(string)
   default     = {}
 }

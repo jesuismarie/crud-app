@@ -22,7 +22,7 @@ variable "cluster_name" {
 variable "cluster_version" {
   description = "Kubernetes version for the EKS cluster"
   type        = string
-  default     = "1.30"
+  default     = "1.36"
 
   validation {
     condition     = can(regex("^1\\.(2[8-9]|3[0-7])$", var.cluster_version))
@@ -133,14 +133,8 @@ variable "eks_nodes_security_group_id" {
   type        = string
 }
 
-variable "common_tags" {
-  description = "Common tags to apply to all resources"
-  type        = map(string)
-  default     = {}
-}
-
 variable "tags" {
-  description = "Additional tags to apply to all resources"
+  description = "Module specific tags to apply to all resources"
   type        = map(string)
   default     = {}
 }
