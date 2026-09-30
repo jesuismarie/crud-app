@@ -1,0 +1,15 @@
+.vscode
+.DS_Store
+*.key
+*.pem
+*.crt
+.terraform/
+.states/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfplan.json
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
