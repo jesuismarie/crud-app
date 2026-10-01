@@ -110,3 +110,17 @@ variable "node_disk_size" {
   type        = number
   default     = 20
 }
+
+# ALB
+variable "lb_sa" {
+  description = "Name of the Kubernetes ServiceAccount used by the AWS Load Balancer Controller (in kube-system)"
+  type        = string
+  default     = "aws-load-balancer-controller"
+}
+
+# EBS
+variable "ebs_sa" {
+  description = "Name of the Kubernetes ServiceAccount used by the EBS CSI Controller (in kube-system)"
+  type        = string
+  default     = "ebs-csi-controller-sa"
+}
