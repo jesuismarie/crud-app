@@ -1,0 +1,15 @@
+# AWS / EKS configuration
+# Real environment-specific values should be supplied during deployment.
+clusterName: "<cluster-name>"
+region: "<aws-region>"
+vpcId: "<vpc-id>"
+accountId: "<aws-account-id>"
+
+# Keep disabled until the corresponding IRSA roles have been created.
+ebsCsi:
+  enabled: false
+  roleArn: "<ebs-csi-irsa-role-arn>"
+
+albController:
+  enabled: false
+  roleArn: "<alb-controller-irsa-role-arn>"
