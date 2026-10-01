@@ -123,7 +123,7 @@ variable "node_disk_size" {
 }
 
 variable "eks_security_group_id" {
-  description = "The ID of the security group to associate with the EKS cluster."
+  description = "The ID of the security group to associate with the EKS cluster"
   type        = string
   default     = null
 }
@@ -134,7 +134,7 @@ variable "eks_nodes_security_group_id" {
 }
 
 variable "tags" {
-  description = "Module specific tags to apply to all resources"
+  description = "Tags applied to all resources"
   type        = map(string)
   default     = {}
 }

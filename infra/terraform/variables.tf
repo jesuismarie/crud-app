@@ -21,7 +21,7 @@ variable "project_name" {
 }
 
 variable "environment" {
-  description = "Environment name"
+  description = "Environment name (dev, staging or prod)"
   type        = string
   default     = "dev"
 
@@ -39,7 +39,7 @@ variable "vpc_cidr" {
 }
 
 variable "azs" {
-  description = "Availability zones"
+  description = "Availability zones (must belong to aws_region)"
   type        = list(string)
   default     = ["us-east-1a", "us-east-1b"]
 }
@@ -70,7 +70,7 @@ variable "cluster_name" {
 }
 
 variable "cluster_version" {
-  description = "Kubernetes version"
+  description = "Kubernetes version of the EKS cluster"
   type        = string
   default     = "1.36"
 }
@@ -112,14 +112,14 @@ variable "node_disk_size" {
 }
 
 # ALB
-variable "lb_sa" {
+variable "lb_controller_service_account" {
   description = "Name of the Kubernetes ServiceAccount used by the AWS Load Balancer Controller (in kube-system)"
   type        = string
   default     = "aws-load-balancer-controller"
 }
 
 # EBS
-variable "ebs_sa" {
+variable "ebs_controller_service_account" {
   description = "Name of the Kubernetes ServiceAccount used by the EBS CSI Controller (in kube-system)"
   type        = string
   default     = "ebs-csi-controller-sa"

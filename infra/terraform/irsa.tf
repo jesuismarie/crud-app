@@ -5,7 +5,7 @@ module "aws_lb_controller_irsa" {
   oidc_provider_arn = module.eks.oidc_provider_arn
   oidc_provider_url = module.eks.oidc_provider_url
   namespace         = "kube-system"
-  service_account   = var.lb_sa
+  service_account   = var.lb_controller_service_account
   policy_json       = file("${path.module}/policies/aws-load-balancer-controller.json")
 }
 
@@ -16,6 +16,6 @@ module "ebs_csi_irsa" {
   oidc_provider_arn   = module.eks.oidc_provider_arn
   oidc_provider_url   = module.eks.oidc_provider_url
   namespace           = "kube-system"
-  service_account     = var.ebs_sa
+  service_account     = var.ebs_controller_service_account
   managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
 }
