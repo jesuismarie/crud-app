@@ -1,0 +1,13 @@
+# AWS / EKS configuration
+# Real environment-specific values should be supplied during deployment.
+
+clusterName: {{ requiredEnv "CLUSTER_NAME" | quote }}
+region: {{ requiredEnv "AWS_REGION_NAME" | quote }}
+vpcId: {{ requiredEnv "AWS_VPC_ID" | quote }}
+accountId: {{ requiredEnv "AWS_ACCOUNT_ID" | quote }}
+
+albController:
+  roleArn: {{ requiredEnv "AWS_LOAD_BALANCER_ROLE_ARN" | quote }}
+
+ebsCsi:
+  roleArn: {{ requiredEnv "AWS_EBS_ROLE_ARN" | quote }}
