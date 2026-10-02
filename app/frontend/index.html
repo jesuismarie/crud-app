@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>User CRUD App</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>User CRUD Application</h1>
+			<p class="subtitle">Create • Read • Update • Delete</p>
+		</header>
+
+		<!-- Form Section -->
+		<section class="card form-section">
+			<h2 id="form-title">Add New User</h2>
+			<form id="user-form">
+				<input type="hidden" id="user-id" />
+
+				<div class="form-row">
+					<div class="form-group">
+						<label for="first_name">First Name</label>
+						<input type="text" id="first_name" required placeholder="John" />
+					</div>
+					<div class="form-group">
+						<label for="last_name">Last Name</label>
+						<input type="text" id="last_name" required placeholder="Doe" />
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group">
+						<label for="age">Age</label>
+						<input type="number" id="age" required min="0" max="150" placeholder="25" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" id="email" required placeholder="john.doe@example.com" />
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<button type="submit" id="submit-btn" class="btn btn-primary">Add User</button>
+					<button type="button" id="cancel-btn" class="btn btn-secondary hidden">Cancel</button>
+				</div>
+			</form>
+		</section>
+
+		<!-- Users Table -->
+		<section class="card table-section">
+			<div class="table-header">
+				<h2>Users</h2>
+				<button id="refresh-btn" class="btn btn-outline">Refresh</button>
+			</div>
+
+			<div id="message" class="message hidden"></div>
+
+			<div class="table-wrapper">
+				<table id="users-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Age</th>
+							<th>Email</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody id="users-tbody">
+						<!-- Filled by JS -->
+					</tbody>
+				</table>
+			</div>
+
+			<p id="empty-state" class="empty-state hidden">No users yet. Add one above!</p>
+		</section>
+	</div>
+
+	<script src="app.js"></script>
+</body>
+</html>

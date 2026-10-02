@@ -1,0 +1,242 @@
+:root {
+	--primary: #4f46e5;
+	--primary-hover: #4338ca;
+	--danger: #dc2626;
+	--danger-hover: #b91c1c;
+	--bg: #f1f5f9;
+	--card: #ffffff;
+	--text: #1e293b;
+	--muted: #64748b;
+	--border: #e2e8f0;
+	--radius: 10px;
+	--shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	background: var(--bg);
+	color: var(--text);
+	line-height: 1.5;
+	min-height: 100vh;
+	padding: 2rem 1rem;
+}
+
+.container {
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+header {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+header h1 {
+	font-size: 1.875rem;
+	font-weight: 700;
+}
+
+.subtitle {
+	color: var(--muted);
+	margin-top: 0.25rem;
+}
+
+.card {
+	background: var(--card);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+	padding: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.card h2 {
+	font-size: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+/* Form */
+.form-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-group label {
+	font-size: 0.875rem;
+	font-weight: 500;
+	margin-bottom: 0.35rem;
+	color: var(--muted);
+}
+
+.form-group input {
+	padding: 0.6rem 0.75rem;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	font-size: 0.95rem;
+	transition: border-color 0.15s;
+}
+
+.form-group input:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgb(79 70 229 / 0.15);
+}
+
+.form-actions {
+	display: flex;
+	gap: 0.75rem;
+	margin-top: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+	padding: 0.55rem 1.1rem;
+	border: none;
+	border-radius: 6px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.15s, transform 0.1s;
+}
+
+.btn:active {
+	transform: scale(0.98);
+}
+
+.btn-primary {
+	background: var(--primary);
+	color: white;
+}
+
+.btn-primary:hover {
+	background: var(--primary-hover);
+}
+
+.btn-secondary {
+	background: #e2e8f0;
+	color: var(--text);
+}
+
+.btn-secondary:hover {
+	background: #cbd5e1;
+}
+
+.btn-outline {
+	background: transparent;
+	border: 1px solid var(--border);
+	color: var(--muted);
+}
+
+.btn-outline:hover {
+	background: var(--bg);
+}
+
+.btn-danger {
+	background: var(--danger);
+	color: white;
+	padding: 0.35rem 0.7rem;
+	font-size: 0.8rem;
+}
+
+.btn-danger:hover {
+	background: var(--danger-hover);
+}
+
+.btn-edit {
+	background: #0ea5e9;
+	color: white;
+	padding: 0.35rem 0.7rem;
+	font-size: 0.8rem;
+	margin-right: 0.4rem;
+}
+
+.btn-edit:hover {
+	background: #0284c7;
+}
+
+/* Table */
+.table-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.table-header h2 {
+	margin-bottom: 0;
+}
+
+.table-wrapper {
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+
+th, td {
+	padding: 0.75rem 0.85rem;
+	text-align: left;
+	border-bottom: 1px solid var(--border);
+}
+
+th {
+	font-weight: 600;
+	color: var(--muted);
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+tbody tr:hover {
+	background: #f8fafc;
+}
+
+.empty-state {
+	text-align: center;
+	color: var(--muted);
+	padding: 2rem 0;
+}
+
+/* Messages */
+.message {
+	padding: 0.75rem 1rem;
+	border-radius: 6px;
+	margin-bottom: 1rem;
+	font-size: 0.9rem;
+}
+
+.message.success {
+	background: #dcfce7;
+	color: #166534;
+}
+
+.message.error {
+	background: #fee2e2;
+	color: #991b1b;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+	.form-row {
+		grid-template-columns: 1fr;
+	}
+}
