@@ -1,3 +1,8 @@
+output "account_id" {
+  description = "AWS account ID this infrastructure is deployed into"
+  value       = data.aws_caller_identity.current.account_id
+}
+
 output "aws_region" {
   description = "AWS region of the cluster (needed by the AWS Load Balancer Controller chart)"
   value       = var.aws_region
