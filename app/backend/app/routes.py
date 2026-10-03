@@ -133,6 +133,9 @@ def update_user(user_id):
 	if error:
 		return jsonify({"error": error}), 400
 
+	if not values:
+		return jsonify({"error": "No valid fields to update"}), 400
+
 	if "email" in values:
 		existing = User.query.filter_by(email=values["email"]).first()
 		if existing and existing.id != user.id:

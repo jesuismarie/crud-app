@@ -1,8 +1,7 @@
 import time
 from sqlalchemy.exc import OperationalError
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 
 db = SQLAlchemy()
 
@@ -25,14 +24,28 @@ def create_app(config_class=None):
 	if config_class is None:
 		from .config import Config
 		config_class = Config
-	app = Flask(__name__)
+	app = Flask(__name__, static_folder=None)
 	app.config.from_object(config_class)
 
-	CORS(app)
 	db.init_app(app)
 
 	from .routes import api_bp
 	app.register_blueprint(api_bp)
+
+	@app.route("/")
+	def index():
+		return send_from_directory(app.config["FRONTEND_DIR"], "index.html")
+
+	@app.route("/<path:filename>")
+	def frontend_files(filename):
+		return send_from_directory(app.config["FRONTEND_DIR"], filename)
+
+	@app.after_request
+	def add_security_headers(response):
+		response.headers["X-Content-Type-Options"] = "nosniff"
+		response.headers["X-Frame-Options"] = "DENY"
+		response.headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none'"
+		return response
 
 	with app.app_context():
 		_init_db(app)

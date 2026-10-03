@@ -1,13 +1,18 @@
 FROM python:3.12-slim
 
+ENV PYTHONUNBUFFERED=1 \
+	PYTHONDONTWRITEBYTECODE=1
+
 WORKDIR /app
 RUN useradd --create-home --uid 10001 appuser
 
-COPY --chown=appuser:appuser ./app/ ./app
-COPY --chown=appuser:appuser ./requirements.txt .
+COPY --chown=10001:10001 ./backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-USER appuser
+COPY --chown=10001:10001 ./backend/app/ ./app
+COPY --chown=10001:10001 ./frontend/ ./frontend
+
+USER 10001
 
 EXPOSE 5000
 

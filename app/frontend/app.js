@@ -70,8 +70,22 @@ async function deleteUser(id) {
 }
 
 // ---------- Render ----------
+function addCell(tr, text) {
+	const td = document.createElement("td");
+	td.textContent = text;
+	tr.appendChild(td);
+}
+
+function makeButton(label, className, onClick) {
+	const btn = document.createElement("button");
+	btn.className = `btn ${className}`;
+	btn.textContent = label;
+	btn.addEventListener("click", onClick);
+	return btn;
+}
+
 function renderUsers(users) {
-	tbody.innerHTML = "";
+	tbody.replaceChildren();
 
 	if (!users.length) {
 		emptyState.classList.remove("hidden");
@@ -82,34 +96,19 @@ function renderUsers(users) {
 
 	users.forEach((user) => {
 		const tr = document.createElement("tr");
-		tr.innerHTML = `
-			<td>${user.id}</td>
-			<td>${escapeHtml(user.first_name)}</td>
-			<td>${escapeHtml(user.last_name)}</td>
-			<td>${user.age}</td>
-			<td>${escapeHtml(user.email)}</td>
-			<td>
-				<button class="btn btn-edit" data-id="${user.id}">Edit</button>
-				<button class="btn btn-danger" data-id="${user.id}">Delete</button>
-			</td>
-		`;
+		addCell(tr, user.id);
+		addCell(tr, user.first_name);
+		addCell(tr, user.last_name);
+		addCell(tr, user.age);
+		addCell(tr, user.email);
+
+		const actions = document.createElement("td");
+		actions.appendChild(makeButton("Edit", "btn-edit", () => startEdit(user.id, users)));
+		actions.appendChild(makeButton("Delete", "btn-danger", () => handleDelete(user.id)));
+		tr.appendChild(actions);
+
 		tbody.appendChild(tr);
 	});
-
-	// Attach event listeners
-	tbody.querySelectorAll(".btn-edit").forEach((btn) => {
-		btn.addEventListener("click", () => startEdit(Number(btn.dataset.id), users));
-	});
-
-	tbody.querySelectorAll(".btn-danger").forEach((btn) => {
-		btn.addEventListener("click", () => handleDelete(Number(btn.dataset.id)));
-	});
-}
-
-function escapeHtml(text) {
-	const div = document.createElement("div");
-	div.textContent = text;
-	return div.innerHTML;
 }
 
 function startEdit(id, users) {
